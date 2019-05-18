@@ -13,10 +13,10 @@ Some Linux users might face problems with SpeechRecognition library for not dete
 
 # Changing voice settings
 In order to change the outputted voice you can do the following:-
-1. Go to sofia.py
-2. Find **responder()** function
-3. Second parameter can be:-
-    - "**sf.say1**" for a slow human-like voice. (Internet speed makes difference)
+1. Open sofia.py with a text editor
+2. Lookup the **responder()** function
+3. The second parameter can be:-
+    - "**sf.say1**" for a slow human-like voice. (Internet speed makes a difference)
     - "**sf.say2**" for a fast robotic voice.
 
 *NOTE: For extra voice control view **sofia_functions.say1()** or **sofia_functions.say2()***
@@ -67,4 +67,4 @@ Voice output: Opens Google Chrome (*No Sh\*t, ha?*)...
 
 `Voice input: Open Google / Facebook / YouTube`
 
-Voice output: Opens three mentioned sites directly (*shocking*)...
+Voice output: Opens the mentioned site directly (*shocking*)...
