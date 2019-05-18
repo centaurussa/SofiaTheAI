@@ -1,7 +1,7 @@
 A mini artificial intelligence that can be used as an OS assistant to perform regular tasks and answer common questions.
 
 # How to Launch Sofia
-**`cd`** to Sofia's root directory and write in terminal:-
+**`cd`** to Sofia's root directory and write in the Command Line Interface(a.k.a Terminal):-
 
 **`python sofia.py`**
 # Handling common errors
@@ -65,6 +65,6 @@ Voice output: Changes the name if previously set...
 
 Voice output: Opens Google Chrome (*No Sh\*t, ha?*)...
 
-`Voice input: Open Google / Fscebook / YouTube`
+`Voice input: Open Google / Facebook / YouTube`
 
-Voice output: Opens one of the three mentioned above (*shocking*)...
+Voice output: Opens three mentioned sites directly (*shocking*)...
