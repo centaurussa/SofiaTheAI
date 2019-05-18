@@ -1,0 +1,12 @@
+# Some package names doesn't match with their module name
+# The commented ones used by Python for checking imports
+
+gTTS  #gtts
+urllib  #urllib
+Google  #googlesearch
+Pyaudio  #pyaudio
+SpeechRecognition  #speech_recognition
+BeautifulSoup4  #bs4
+Requests  #requests
+Pyttsx3  #pyttsx3
+Pygame  #pygame
