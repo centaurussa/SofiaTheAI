@@ -73,7 +73,7 @@ def say1(lines):
         cacheClearer()
 
 
-# Use pyttsx3's offline Text to Speech.
+# Use pyttsx3's offline Text to Speech
 def say2(lines):
     '''Text parsed to pyttsx3's offline Text-to-Speech'''
 

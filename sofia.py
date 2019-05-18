@@ -37,14 +37,14 @@ def main():
                     except SystemExit:
 
                         _breaker = 1  # End the main loop
-                        break  # Break listening loop at
+                        break  # Break listening loop
 
                     except sr.UnknownValueError:
-                        print("Sorry I didn't hear that. Please try again.")
+                        print("Sorry I didn't hear that. Can you repeat that?")
                     except Exception as e:
                         printe(e)
 
-        # Fail silently if device at 'i' was not found
+        # Inform the user if the device at index of '_i' was not found
         except Exception:
             print((f"No voice input device found at 'device_index={_i}',"
             " trying another one."))
@@ -53,13 +53,13 @@ def main():
         if _breaker == 1:
             break
 
-        # If no voice input device found, then try another one
+        # If no input device found at index of '_i', then try another one
         if _worked is None:
             _i += 1
 
     sf.cacheClearer()
 
-# Check if the dependencies exist
+# Check if the dependencies are installed
 libs = ['pyaudio', 'googlesearch', 'gtts', 'speech_recognition',
                          'pyttsx3', 'requests', 'bs4', 'pygame']
 _satisfied = 1
