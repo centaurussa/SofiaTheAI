@@ -59,17 +59,25 @@ def main():
 
     sf.cacheClearer()
 
+# Check if the dependencies exist
+libs = ['pyaudio', 'googlesearch', 'gtts', 'speech_recognition',
+                         'pyttsx3', 'requests', 'bs4', 'pygame']
+_satisfied = 1
+notInstalled = []
 
-with open("requirements.txt", "r") as f:
-    _satisfied = 1
-    for index, lib in enumerate(f.readlines()):
-        if index > 2:
-            lib = lib.rstrip("\n")
-            try:
-                exec(f"import {lib.split('  #')[-1]}")
-            except ImportError:
-                whichLib = lib.split("  #")[0]
-                print(f"A library called '{whichLib}' is missing.")
-                _satisfied = 0
-    if _satisfied == 1:
-        main()
+for lib in libs:
+    try:
+        exec(f"import {lib}")
+    except:
+        notInstalled += [lib]
+        _satisfied = 0
+
+if _satisfied == 1:
+    main()
+else:
+    import os
+    os.system('cls' if os.name == "nt" else "clear")
+    print("The following packages are missing:-\n---------------")
+    for lib in notInstalled:
+        print("- ", lib)
+    print("---------------\nInstall them and try again.\n")

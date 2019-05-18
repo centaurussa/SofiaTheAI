@@ -5,31 +5,30 @@ A mini artificial intelligence that can be used as an OS assistant to perform re
 
 **`python sofia.py`**
 # Handling common errors
-Some Linux users might face problems with SpeechRecognition library for not detecting their input mic devices, this problem can be solved by downloading the follow two libraries:
+If you didn't install Pyaudio and portaudio from the included `.yml` file, then you might run into some problems. Some Linux users might face problems with SpeechRecognition library for not detecting their input mic devices, this problem can be solved by downloading the follow two libraries:
 - Pyaudio
 - Portaudio
 
-> If that didn't help, you can try **`Conda`** to install the mentioned repository in [this comment](https://github.com/ContinuumIO/anaconda-issues/issues/4139#issuecomment-433710003).
+> If that didn't help and another error occurred, then it means you downloaded the buggy ones. You can try **`Conda`** to install the bug-free ones from the mentioned channel [here](https://github.com/ContinuumIO/anaconda-issues/issues/4139#issuecomment-433710003).
 
 # Changing voice settings
 In order to change the outputted voice you can do the following:-
-1. Go to sofia.py
-2. Find **responder()** function
-3. Second parameter can be:-
-    - "**sf.say1**" for a slow human-like voice. (Internet speed makes difference)
+1. Open sofia.py with a text editor
+2. Lookup the **responder()** function
+3. The second parameter can be:-
+    - "**sf.say1**" for a slow human-like voice. (Internet speed makes a difference)
     - "**sf.say2**" for a fast robotic voice.
 
 *NOTE: For extra voice control view **sofia_functions.say1()** or **sofia_functions.say2()***
 # Dependencies
 - Pyaudio
 - gTTS
-- urllib
-- google
+- Google
 - SpeechRecognition
 - BeautifulSoup4
-- requests
-- pyttsx3
-- pygame
+- Requests
+- Pyttsx3
+- Pygame
 
 
 # Basic voice inputs
@@ -65,6 +64,6 @@ Voice output: Changes the name if previously set...
 
 Voice output: Opens Google Chrome (*No Sh\*t, ha?*)...
 
-`Voice input: Open Google / Fscebook / YouTube`
+`Voice input: Open Google / Facebook / YouTube`
 
-Voice output: Opens one of the three mentioned above (*shocking*)...
+Voice output: Opens the mentioned site directly (*shocking*)...
