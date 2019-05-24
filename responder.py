@@ -1,130 +1,152 @@
 import os
-import random
-from platform import system
+from random import choice
+from time import sleep
+import webbrowser
 
-from sofia_functions import sofiaAge, selfName, cached
+from sofia_functions import inputName, sofiaAge
 
-if system() == "Windows":
-    linkOpener = "start"
-elif system() == "Darwin":
-    linkOpener = "open"
-else:
-    linkOpener = "xdg-open"
-
-
+cached = None
 def responder(text, say, clearer):
-    '''Analyze the passed text, does a response or an action with the preferred voice'''
+    '''Analyze the passed text, do a response or an action with the preferred voice'''
 
-    global selfName, cached
+    global cached
+    s_text = text.lower()  # To small letters in order to reduce the if-else(s)
 
-
-    def selfNameFunc():
-        '''Sets a self name when triggered for that session'''
-        global selfName
-        say("I don't really know you, may you write your full name for me please?\n")
-        while 1:
-            selfName = input("Your name: ")
-            selfName = selfName.title()
-            if len(selfName) < 3:
-                print("Sorry, your name is too short, try again please.\n")
-            else:
-                break
-        if selfName:
-            say(f"Alright, nice to meet you {selfName}")
-            clearer()
+    inputOutputData = [  # Useable and compare-able data. (NOTE:[n][0] ignored)
+    [[0], "hello", "hi", "hey"],
+    [[1], "How may I help you?", "How can I help you", "What's up?"],
+    [[2], "what is your name", "what's your name"],
+    [[3], "open the browser", "open browser", "start the browser"],
+    [[4], "facebook.com", "youtube.com", "google.com", "gmail.com", "yahoo.com", "github.com"],
+    [[5], "what's my name", "what is my name", "who am i", "do you know me"],
+    [[6], "how are you", "how you doing", "how are you doing"],
+    [[7], "I'm good.", "I am doing fine.", "I'm fine.", "Doing alright.", "Doing great."]
+    ]
 
 
-    s_text = text[:].lower()
+    if "who are you" in s_text:
+        say("I am Sofia, your assistant.")
 
-    if s_text == "quit" or text == "exit":
-        say("Ok. See you later.")
-        print("Exiting...")
-        raise SystemExit
-    elif "hi" == s_text or "hello" == s_text or "hello sophia" in s_text or "hi sophia" in s_text:
-        if selfName != None:
-            say(f"Hello {selfName.split(' ')[0]}, how can I help you?")
-        elif selfName == None:
-            say("Well, hello there.")
-            selfNameFunc()
-    elif "how are you" in s_text:
-        say("I am actually fine, what about you?")
-        cached = s_text
-    elif ("i am good" in s_text or "i'm good" in s_text or "i am fine" in s_text or "i'm fine" in s_text) and cached != None:
-        say("Alright, hopefully you remain so!")
-    elif "your name" in s_text or "who are you" in s_text:
-        say("My name is Sofia.")
-
-    elif ("my name" in s_text or "do you know me" in s_text or "who am i" in s_text) and "change" not in s_text:
-        if selfName == None:
-            selfNameFunc()
-        elif (selfName.split(" ")[0][0].lower() == "y" and selfName.split(" ")[0][-1].lower() == "f") and (selfName.split(" ")[-1].lower() == "adnan"
-        ):
-            say("You're my creator, Yusif!")
-        else:
-            say(f"You are {selfName}, my lovely guest!")
-    elif "old are you" in s_text or "your age" in s_text:
-        say(f"Yusif created me before {sofiaAge()} days.")
-    elif s_text == "open facebook":
-        say("Sure, opening Facebook")
-        os.system(f"{linkOpener} http://facebook.com")
-        clearer()
-    elif "youtube" in s_text and "search for" in s_text:
-        import urllib.request
-        from bs4 import BeautifulSoup
-        textToSearch = text.split("search for")[-1]
-        query = urllib.parse.quote(textToSearch)
-        url = "https://www.youtube.com/results?search_query=" + query
-        response = urllib.request.urlopen(url)
-        html = response.read()
-        soup = BeautifulSoup(html, 'html.parser')
-        for vid in soup.findAll(attrs={'class':'yt-uix-tile-link'}):
-            say(f"Sure. Searching for {textToSearch}...\n")
-            os.system(f'{linkOpener} https://www.youtube.com' + vid['href'])
-            clearer()
-            print(f"Finding {textToSearch}...\n")
-            break
-    elif "find" in s_text:
-        import requests
-        from googlesearch import search
-
-        query = s_text.split("find")[-1]
-        link = requests.get(next(search(query, tld="co.in", num=10, stop=1, pause=2)))
-        os.system(f"{linkOpener} " + link.url)
-        say(f"Ok. Searching for {query}")
-
-    elif "open" in s_text and "youtube" in s_text:
-        say("Sure, opening YouTube")
-        os.system(f"{linkOpener} http://youtube.com")
-        clearer()
-    elif "open" in s_text and "google" in s_text:
-        say("Sure, opening Google")
-        os.system(f"{linkOpener} http://google.com")
-        clearer()
-    elif "change my name" in s_text:
-        selfName = s_text.split("change my name to ")[-1].title()
-        say(f"Ok. Your name changed to {selfName}")
-        print(f"Your name is: {selfName}")
-    elif s_text == "open google chrome" or s_text == "open chrome":
-        say("Sure, opening Google chrome")
-        if system() == "Windows":
-            os.system("start chrome")
-        elif system() == "Darwin":
-            os.system("open -a 'Google Chrome'")
-        else:
-            os.system("google-chrome")
-        clearer()
     elif "clear" in s_text:
         say("Done.")
         clearer()
-    elif "search for" in s_text and "youtube" not in s_text:
-        randomer = ["Ok", "Sure", "Alright"]
-        textCopy = s_text[:]
-        textCopy = textCopy.split("search for")
-        os.system(f"{linkOpener} " + f'"https://www.google.com/search?q={textCopy[-1]}"')
-        say(random.choice(randomer) + f". Searching for {textCopy[-1]}")
+        print("Listening...")
+
+    elif "old are you" in s_text or "your age" in s_text:
+        say(f"Yousif created me before {sofiaAge()} days.")
+
+    # It's a common question :v
+    elif "do you love me" in s_text:
+        say("I do love your company.")
+        cached = "do you love me"
+
+    # Related to 'Do you love me?'
+    elif (cached is not None) and ("really" in s_text or "for real" in s_text):
+        say("From the bottom of my processor.. HE-HE")
+
+    # Check if asked for self status
+    elif any([i in s_text for i in inputOutputData[6][1:]]):
+        say(f"{choice(inputOutputData[7][1:])}")
+
+    # Check if asked for my name
+    elif s_text in inputOutputData[2][1:]:
+        say("My name is Sofia")
+
+    # End session if said Exit or Quit
+    elif s_text in ["exit", "quit"]:
+        say("Ok. Have a nice day")
+        raise SystemExit
+
+    # Check if asked for self name
+    elif any([i in s_text for i in inputOutputData[5][1:]]):
+        fileExist = os.path.isfile("user_information.txt")
+        if fileExist:
+            with open("user_information.txt", "r") as f:
+                for line in f.readlines():
+                    line = line.rstrip("\n")
+                    name = line.split("=")[-1]
+                    if len(name) < 2:
+                        print("The written name is too short, please write another one.\n")
+                        inputName()
+                    else:
+                        if any([i in s_text for i in inputOutputData[5][1:3]]):
+                            say(f"Your name is {name}.")
+                        elif inputOutputData[5][3] in s_text:
+                            say(f"You're {name}.")
+                        elif inputOutputData[5][4] in s_text:
+                            say(f"Of course I do, you are {name}.")
+        else:
+            say("I don't really know you, may you write your name for me?\n")
+            inputName()
+
+    # Check if user greeted me with a keyword I might understand (Ex: Hello)
+    elif any(match in s_text for match in inputOutputData[0][1:]) and all([i not in s_text for i in ["search", "find"]]):
+        # Greet randomly
+        say(f"{choice(inputOutputData[0][1:]).title()}. {choice(inputOutputData[1][1:])}")
+
+    # Open the default web browser (Ex: Open the web browser)
+    elif any(match in s_text for match in inputOutputData[3][1:]):
+        say("Done.")
+        webbrowser.open_new(f'https://')
+        sleep(3)  # Wait till it finishes writing on the CLI
+        clearer()  # Then clear
+
+        print("Listening...\n---> The default web browser launched.")
+
+    # Open <A_WEBSITE_EXIST_IN_THE_LIST> (Ex: Open YouTube)
+    elif "open" in s_text and any([i.split(".")[0] in s_text.split(" ")[-1] for i in inputOutputData[4][1:]]):
+        whichSite = s_text.split(" ")[-1]
+        say(f"Sure. Opening {whichSite}.")
+        for url in inputOutputData[4][1:]:
+            if whichSite in url:
+                webbrowser.open_new(f'https://www.{url}')
+                sleep(3)
+                clearer()
+                print(f"Listening...\n---> Opening {url}...")
+                break
+
+    # Regular search on Google (Ex: Search for Todya's weather)
+    elif "search for" in s_text:
+        whatToSearchFor = s_text.split("search for ")[-1]
+        say(f"Sure. Searching for {whatToSearchFor}")
+        webbrowser.open_new(f"https://www.google.com/search?q={whatToSearchFor}")
+        sleep(3)
         clearer()
-        print("")
-        print("\nSearching for:", textCopy[-1])
+        print(f"Listening...\n---> Searching for {whatToSearchFor}...")
+
+    # Open the first link Google provides with the passed sentence
+    # (Ex: Find the cheapest BMW model)
+    elif "find" in s_text and all([i not in s_text for i in ['in youtube', "on youtube"]]):
+        import googlesearch
+
+        whatToFind = s_text.split("find ")[-1]
+        say(f"Alright. Finding {whatToFind}.")
+        link = next(googlesearch.search(whatToFind, stop=1, pause=2))
+        webbrowser.open_new(link)
+        sleep(3)
+        clearer()
+        print(f"Listening...\n---> Finding {whatToFind.title()}...")
+
+    # Find the first link YouTube provides with the passed sentence
+    elif "find" in s_text and any([i in s_text for i in ['in youtube', "on youtube"]]):
+        import urllib.request
+        from bs4 import BeautifulSoup
+
+        whatToFind = s_text.split("find ")[1]
+        whatToFind = urllib.parse.quote(whatToFind)
+        response = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + whatToFind).read()
+        response = BeautifulSoup(response, "html.parser")
+
+        for video in response.find_all(attrs={"class":"yt-uix-tile-link"}):
+            webbrowser.open_new("https://www.youtube.com" + video['href'])
+            sleep(3)
+            clearer()
+            urlTitle = urllib.request.urlopen("https://www.youtube.com" + video['href']).read()
+            urlTitle = BeautifulSoup(urlTitle, "html.parser")
+            urlTitle = str(urlTitle.title).split("-YouTube")[0]
+            urlTitle = urlTitle[7:-18]
+            print(f"Listening...\n---> Found {urlTitle} on YouTube.")
+            break
+
     else:
-        clearer()
-        print("-->", text)
+        print("\nYou:", text)

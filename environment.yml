@@ -1,14 +1,14 @@
 name: Sofia-Env
 channels:
     - nwani
+    - defaults
 dependencies:
+    - defaults::python=3.6
     - nwani::portaudio
     - nwani::pyaudio
     - pip:
       - SpeechRecognition
       - gTTS
-      - Google
       - Pyttsx3
       - Pygame
-      - Requests
-      - beautifulsoup4
+      - BeautifulSoup4

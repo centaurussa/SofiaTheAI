@@ -1,32 +1,18 @@
 import os
+
 from gtts import gTTS  # Google's Text to Speech
 import pyttsx3
-
-selfName = None  # Change it to your name (e.g. "John Doe")
-cached = None
-
-engine = pyttsx3.init()
-engine.setProperty('volume', 2)
-
-if os.name != "nt":
-    engine.setProperty('voice', 'english+f4')
-    engine.setProperty('rate', 140)
-else:
-    voices = engine.getProperty('voices')
-    engine.setProperty('voice', voices[0].id)
-    engine.setProperty('rate', 120)
+from platform import system
 
 
-# Clears the window
 def clearer():
     '''Clears the CLI'''
 
     os.system("cls" if os.name == "nt" else "clear")
-    print("Listening...\n")
 
 
-def cacheClearer():
-    '''Removes the past session\'s activiy'''
+def cache_clearer():
+    '''Removes past session\'s activity'''
 
     try:
         os.remove("output.mp3")
@@ -49,10 +35,11 @@ def say1(lines):
         pygame.mixer.init()
         pygame.mixer.music.load(open(f"{os.getcwd()}/output.mp3", "rb"))
         pygame.mixer.music.play()
+
         while pygame.mixer.music.get_busy():
             sleep(1)
 
-        cacheClearer()
+        cache_clearer()
 
     else:
         import pygame
@@ -70,16 +57,45 @@ def say1(lines):
             pygame.event.poll()
             clock.tick(10)
 
-        cacheClearer()
+        cache_clearer()
 
 
 # Use pyttsx3's offline Text to Speech
 def say2(lines):
     '''Text parsed to pyttsx3's offline Text-to-Speech'''
 
+    engine = pyttsx3.init()
+    engine.setProperty('volume', 1)
+
+    if os.name != "nt":  # Set the female voice for Linux systems
+        engine.setProperty('voice', 'english+f4')
+        engine.setProperty('rate', 140)
+    else:
+        voices = engine.getProperty('voices')  # Set the female voice for Windows systems
+        engine.setProperty('voice', voices[0].id)
+        engine.setProperty('rate', 120)
+
     engine.say(lines)
     engine.runAndWait()
     clearer()
+    print("Listening...")
+
+
+def inputName():
+    '''Takes user\'s name and stores it in a .txt file'''
+
+    while 1:
+        name = input("Your name: ")
+        if len(name) < 2:
+            print("The written name is too short, try again.\n")
+        else:
+            break
+    with open("user_information.txt", "w") as f:
+        f.write(f"name='{name}'")
+    say(f"Alright. Nice to meet you {name}")
+    sleep(2)
+    clearer()
+    print("Listening...")
 
 
 # Returns time differece between a set date and today's date

@@ -1,9 +1,12 @@
-A mini artificial intelligence that can be used as an OS assistant to perform regular tasks and answer common questions.
+An artificial dumb intelligence that can be used to pick up words on the fly (inputted voice) and convert them to text that can be analyzed to make a response or an action.
 
-# How to Launch Sofia
-**`cd`** to Sofia's root directory and write in the Command Line Interface(a.k.a Terminal):-
+*NOTE: You can refer to the \*\*responder.py\*\* to add more if-else statements to increase the control and functionality of Sofia to fit your needs*
+
+# How to launch the sample
+**`cd`** to the sample's root directory and write in the Command Line Interface(a.k.a Terminal) the following line:-
 
 **`python sofia.py`**
+
 # Handling common errors
 If you didn't install Pyaudio and portaudio from the included `.yml` file, then you might run into some problems. Some Linux users might face problems with SpeechRecognition library for not detecting their input mic devices, this problem can be solved by downloading the follow two libraries:
 - Pyaudio
@@ -19,30 +22,36 @@ In order to change the outputted voice you can do the following:-
     - "**sf.say1**" for a slow human-like voice. (Internet speed makes a difference)
     - "**sf.say2**" for a fast robotic voice.
 
-*NOTE: For extra voice control view **sofia_functions.say1()** or **sofia_functions.say2()***
+*NOTE: For extra voice control view \*\*sofia_functions.say1()\*\* or \*\*sofia_functions.say2()\*\**
 # Dependencies
 - Pyaudio
 - gTTS
-- Google
 - SpeechRecognition
-- BeautifulSoup4
-- Requests
 - Pyttsx3
 - Pygame
-
+- Google
+- BeautifulSoup4
 
 # Basic voice inputs
 `Voice input: Hello Sofia / Hi Sofia / Hello / Hi / Who are you?..`
 
-Voice output: Some action or respond...
+Voice output: Some action or response...
 
 `Voice input: Do you know me? / Who am I? / What is my name?`
 
-Voice output: Some action or respond...
+Voice output: Some action or response...
 
 `Voice input: How are you? `
 
-Voice output: Some respond...
+Voice output: Some response...
+
+`Voice input: Do you love me?`
+
+Voice output: Some response...
+
+------------------------`Voice input: Really?`
+
+-------------------------Voice output: Some response...
 
 `Voice input: Find the best BMW model`
 
@@ -52,15 +61,11 @@ Voice output: Opens the first link Google provides automatically...
 
 Voice output: A regular search in Google...
 
-`Voice input: Search for Comfortably numb by Pink Floyd in YouTube`
+`Voice input: Find Comfortably numb by Pink Floyd in/on YouTube`
 
 Voice output: Opens the first result YouTube provides...
 
-`Voice input: Change my name to <A_NAME>`
-
-Voice output: Changes the name if previously set...
-
-`Voice input: Open chrome / open Google Chrome`
+`Voice input: Open the web browser / Open the web browser`
 
 Voice output: Opens Google Chrome (*No Sh\*t, ha?*)...
 

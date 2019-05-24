@@ -1,4 +1,4 @@
-def main():
+def goSofia():
     import os
     import sys
     from time import sleep
@@ -12,22 +12,26 @@ def main():
     _breaker = 0
     _i = 0
     _worked = None
+
     while True:
         try:
             # Set listening port
             with sr.Microphone(device_index=_i) as source:
-                _worked = _i
-                sf.clearer()
-                sf.cacheClearer()
+                _worked = _i  # If no error raised at device_index=_i,
+                              # then said _i is a source of voice input
+
+                sf.clearer()  # Clear the screen
+                print("Listening...")
+                sf.cache_clearer()  # Clear the past session's data
                 while 1:  # Keep listening
 
                     # Filter noise
                     r.adjust_for_ambient_noise(source)
+
                     # Listen to the port(The source)
                     audio = r.listen(source)
-
                     try:
-                        # Hold what Googgle Speech-to-Text returns
+                        # Send then hold what Googgle's Speech-to-Text returns
                         text = r.recognize_google(audio)
 
                         # Respond or do an action
@@ -35,20 +39,28 @@ def main():
 
                     # Exit from Listening loop if session ended
                     except SystemExit:
-
                         _breaker = 1  # End the main loop
                         break  # Break listening loop
 
+                    # Handle it if voice was not recognized
                     except sr.UnknownValueError:
                         print("Sorry I didn't hear that. Can you repeat that?")
                     except Exception as e:
-                        printe(e)
+                        print(e)
 
         # Inform the user if the device at index of '_i' was not found
-        except Exception:
-            print((f"No voice input device found at 'device_index={_i}',"
-            " trying another one."))
+        except AssertionError:
+            print(f"Device at device_index={_i} was not found, trying another one.")
             sleep(3)
+
+        # Check if Sofia already running in another window
+        except OSError as e:
+            if e.errno == -9998:
+                sf.clearer()
+                print("Sofia already running.")
+                break
+            else:
+                print(e)
 
         if _breaker == 1:
             break
@@ -57,27 +69,41 @@ def main():
         if _worked is None:
             _i += 1
 
-    sf.cacheClearer()
+    sf.cache_clearer()
 
-# Check if the dependencies are installed
-libs = ['pyaudio', 'googlesearch', 'gtts', 'speech_recognition',
-                         'pyttsx3', 'requests', 'bs4', 'pygame']
-_satisfied = 1
-notInstalled = []
 
-for lib in libs:
-    try:
-        exec(f"import {lib}")
-    except:
-        notInstalled += [lib]
-        _satisfied = 0
+def main():
+    # Check if the dependencies are installed
+    libs = ['pyaudio',
+            'gtts',
+            'speech_recognition',
+            'pyttsx3',
+            'pygame',
+            'googlesearch',
+            'bs4']
 
-if _satisfied == 1:
+    _satisfied = 1
+    notInstalled = []
+
+    for lib in libs:
+        try:
+            exec(f"import {lib}")
+        except:
+            notInstalled += [lib]
+            _satisfied = 0
+
+    # If all set, launch Sofia
+    if _satisfied == 1:
+        goSofia()
+    # If not, inform the user with the missing dependencies
+    elif _satisfied == 0 and len(notInstalled) >= 1:
+        import os
+        os.system('cls' if os.name == "nt" else "clear")
+        print("The following packages are missing:-\n---------------")
+        for lib in notInstalled:
+            print("- ", lib)
+        print("---------------\nInstall them and try again.\n")
+
+
+if __name__ == "__main__":
     main()
-else:
-    import os
-    os.system('cls' if os.name == "nt" else "clear")
-    print("The following packages are missing:-\n---------------")
-    for lib in notInstalled:
-        print("- ", lib)
-    print("---------------\nInstall them and try again.\n")
