@@ -1,11 +1,13 @@
 import os
 from random import choice
-from time import sleep
+from time import sleep, strftime
 import webbrowser
 
 from sofia_functions import inputName, sofiaAge
 
 cached = None
+
+
 def responder(text, say, clearer):
     '''Analyze the passed text, do a response or an action with the preferred voice'''
 
@@ -20,7 +22,8 @@ def responder(text, say, clearer):
     [[4], "facebook.com", "youtube.com", "google.com", "gmail.com", "yahoo.com", "github.com"],
     [[5], "what's my name", "what is my name", "who am i", "do you know me"],
     [[6], "how are you", "how you doing", "how are you doing"],
-    [[7], "I'm good.", "I am doing fine.", "I'm fine.", "Doing alright.", "Doing great."]
+    [[7], "I'm good.", "I am doing fine.", "I'm fine.", "Doing alright.", "Doing great."],
+    [[8], "you listen to music", "you listen to songs", "you into music", "do you love music", "your favourite band"]
     ]
 
 
@@ -35,14 +38,30 @@ def responder(text, say, clearer):
     elif "old are you" in s_text or "your age" in s_text:
         say(f"Yousif created me before {sofiaAge()} days.")
 
+    elif inputOutputData[8][1] in s_text or inputOutputData[8][2] in s_text:
+        say("I am an AI assistant, I guide others to a treasure I cannot possess. Hashtag sad face.")
+
+    elif inputOutputData[8][3] in s_text or inputOutputData[8][4] in s_text:
+        say("I can't you dummy, I am an AI, but I love whoever listens to Pink Floyd.")
+
+    elif inputOutputData[8][5] in s_text:
+        say("Well, you know the biggies like Metallica, Pink FLoyd, Tool and Led zeppelin..")
+
     # It's a common question :v
     elif "do you love me" in s_text:
-        say("I do love your company.")
-        cached = "do you love me"
+        ignoredAt = strftime("%I:%M %p")
+        if int(ignoredAt[:2]) < 10:
+            ignoredAt = ignoredAt[1:]
+        pickOne = choice([f"\n✔ Heared at {ignoredAt} (She is playing hard to get ;D)\n", "I do love your company.", "Uhm, Yeah..sure, that!"])
+        if "hard to get" not in pickOne:
+            say(pickOne)
+            cached = "do you love me"
+        else:
+            print(pickOne)
 
     # Related to 'Do you love me?'
     elif (cached is not None) and ("really" in s_text or "for real" in s_text):
-        say("From the bottom of my processor.. HE-HE")
+        say("From the bottom of my processor.. HA-HA")
 
     # Check if asked for self status
     elif any([i in s_text for i in inputOutputData[6][1:]]):
