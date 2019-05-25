@@ -67,7 +67,7 @@ def responder(text, say, clearer):
                     name = line.split("=")[-1]
                     if len(name) < 2:
                         print("The written name is too short, please write another one.\n")
-                        inputName()
+                        inputName(say)
                     else:
                         if any([i in s_text for i in inputOutputData[5][1:3]]):
                             say(f"Your name is {name}.")
@@ -77,7 +77,7 @@ def responder(text, say, clearer):
                             say(f"Of course I do, you are {name}.")
         else:
             say("I don't really know you, may you write your name for me?\n")
-            inputName()
+            inputName(say)
 
     # Check if user greeted me with a keyword I might understand (Ex: Hello)
     elif any(match in s_text for match in inputOutputData[0][1:]) and all([i not in s_text for i in ["search", "find"]]):

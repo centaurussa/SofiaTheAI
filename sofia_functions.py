@@ -1,4 +1,5 @@
 import os
+from time import sleep
 
 from gtts import gTTS  # Google's Text to Speech
 import pyttsx3
@@ -31,7 +32,6 @@ def say1(lines):
         tts.save("output.mp3")
 
         import pygame.mixer
-        from time import sleep
         pygame.mixer.init()
         pygame.mixer.music.load(open(f"{os.getcwd()}/output.mp3", "rb"))
         pygame.mixer.music.play()
@@ -81,7 +81,7 @@ def say2(lines):
     print("Listening...")
 
 
-def inputName():
+def inputName(say):
     '''Takes user\'s name and stores it in a .txt file'''
 
     while 1:
