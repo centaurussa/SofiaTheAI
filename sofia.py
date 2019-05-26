@@ -57,8 +57,8 @@ def goSofia():
         except OSError as e:
             if e.errno == -9998:
                 sf.clearer()
-                print("Sofia already running.")
-                break
+                print(f"device_index at {_i} is being used by another program. Trying another one")
+                sleep(3)
             else:
                 print(e)
 
