@@ -160,10 +160,7 @@ def responder(text, say, clearer):
             webbrowser.open_new("https://www.youtube.com" + video['href'])
             sleep(3)
             clearer()
-            urlTitle = urllib.request.urlopen("https://www.youtube.com" + video['href']).read()
-            urlTitle = BeautifulSoup(urlTitle, "html.parser")
-            urlTitle = str(urlTitle.title).split("-YouTube")[0]
-            urlTitle = urlTitle[7:-18]
+            urlTitle = video['title']
             print(f"Listening...\n---> Found {urlTitle} on YouTube.")
             break
 
