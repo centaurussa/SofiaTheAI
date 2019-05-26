@@ -37,7 +37,7 @@ def say1(lines):
         pygame.mixer.music.play()
 
         while pygame.mixer.music.get_busy():
-            sleep(1)
+            sleep(2)
 
         cache_clearer()
 

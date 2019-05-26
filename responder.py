@@ -52,7 +52,7 @@ def responder(text, say, clearer):
         ignoredAt = strftime("%I:%M %p")
         if int(ignoredAt[:2]) < 10:
             ignoredAt = ignoredAt[1:]
-        pickOne = choice([f"\n✔ Heared at {ignoredAt} (She is playing hard to get ;D)\n", "I do love your company.", "Uhm, Yeah..sure, that!"])
+        pickOne = choice([f"\n✔ Heared at {ignoredAt} (She is playing hard to get ;D)\n", "I do love your company.", "Yeah, sure."])
         if "hard to get" not in pickOne:
             say(pickOne)
             cached = "do you love me"
