@@ -18,17 +18,17 @@ def goSofia():
             # Set listening port
             with sr.Microphone(device_index=_i) as source:
                 _worked = _i  # If no error raised at device_index=_i,
-                              # then said _i is a source of voice input
+                              # then the said _i is a source of voice input
 
                 sf.clearer()  # Clear the screen
                 print("Listening...")
-                sf.cache_clearer()  # Clear the past session's data
+                sf.cache_clearer()  # Clear past session's data
                 while 1:  # Keep listening
 
                     # Filter noise
                     r.adjust_for_ambient_noise(source)
 
-                    # Listen to the port(The source)
+                    # Listen to the port (the source)
                     audio = r.listen(source)
                     try:
                         # Send then hold what Googgle's Speech-to-Text returns
@@ -37,23 +37,24 @@ def goSofia():
                         # Respond or do an action
                         responder.responder(text, sf.say1, sf.clearer)
 
-                    # Exit from Listening loop if session ended
+                    # Exit from the listening loop if the session ended
                     except SystemExit:
                         _breaker = 1  # End the main loop
                         break  # Break listening loop
 
-                    # Handle it if voice was not recognized
+                    # Handle the error if voice was not recognized
                     except sr.UnknownValueError:
                         print("Sorry I didn't hear that. Can you repeat that?")
                     except Exception as e:
                         print(e)
+                        sleep(3)
 
         # Inform the user if the device at index of '_i' was not found
         except AssertionError:
             print(f"Device at device_index={_i} was not found, trying another one.")
             sleep(3)
 
-        # Check if Sofia already running in another window
+        # Check if the input source is being used by another device
         except OSError as e:
             if e.errno == -9998:
                 sf.clearer()
@@ -61,6 +62,7 @@ def goSofia():
                 sleep(2)
             else:
                 print(e)
+                sleep(2)
 
         if _breaker == 1:
             break

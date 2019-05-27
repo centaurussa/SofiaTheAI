@@ -5,13 +5,13 @@ import webbrowser
 
 from sofia_functions import inputName, sofiaAge
 
-cached = None
+_cached = None
 
 
 def responder(text, say, clearer):
     '''Analyze the passed text, do a response or an action with the preferred voice'''
 
-    global cached
+    global _cached
     s_text = text.lower()  # To small letters in order to reduce the if-else(s)
 
     inputOutputData = [  # Useable and compare-able data. (NOTE:[n][0] ignored)
@@ -55,12 +55,12 @@ def responder(text, say, clearer):
         pickOne = choice([f"\n✔ Heared at {ignoredAt} (She is playing hard to get ;D)\n", "I do love your company.", "Yeah, sure."])
         if "hard to get" not in pickOne:
             say(pickOne)
-            cached = "do you love me"
+            _cached = "do you love me"
         else:
             print(pickOne)
 
     # Related to 'Do you love me?'
-    elif (cached is not None) and ("really" in s_text or "for real" in s_text):
+    elif (_cached is not None) and ("really" in s_text or "for real" in s_text):
         say("From the bottom of my processor.. HA-HA")
 
     # Check if asked for self status
@@ -162,7 +162,7 @@ def responder(text, say, clearer):
             clearer()
             urlTitle = video['title']
             print(f"Listening...\n---> Found {urlTitle} on YouTube.")
-            break
+            break # We are intrested in the first result only
 
     else:
         print("\nYou:", text)

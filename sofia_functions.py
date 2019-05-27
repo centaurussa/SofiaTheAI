@@ -16,8 +16,8 @@ def cache_clearer():
     '''Removes past session\'s activity'''
 
     try:
-        os.remove("output.mp3")
-        os.remove(".google-cookie")
+        os.remove(os.path.join(os.getcwd(), "output.mp3"))
+        os.remove(os.path.join(os.getcwd(), ".google-cookie"))
     except OSError:
         pass
 
@@ -33,7 +33,8 @@ def say1(lines):
 
         import pygame.mixer
         pygame.mixer.init()
-        pygame.mixer.music.load(open(f"{os.getcwd()}/output.mp3", "rb"))
+        pathToFile = os.path.join(os.getcwd(),  "output.mp3")
+        pygame.mixer.music.load(open(pathToFile, "rb"))
         pygame.mixer.music.play()
 
         while pygame.mixer.music.get_busy():
@@ -43,9 +44,9 @@ def say1(lines):
 
     else:
         import pygame
-        gTTS(text=lines, lang='en', slow=False).save("output.mp3")
+        gTTS(text=lines, lang='en', slow=False).save(os.path.join(os.getcwd(), "output.mp3"))
         pygame.init()
-        pygame.mixer.music.load("output.mp3")
+        pygame.mixer.music.load(os.path.join(os.getcwd(), "output.mp3"))
         pygame.mixer.music.play()
 
         clock = pygame.time.Clock()
