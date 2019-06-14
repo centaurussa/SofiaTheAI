@@ -11,4 +11,5 @@ dependencies:
       - gTTS
       - Pyttsx3
       - Pygame
+      - Google
       - BeautifulSoup4
