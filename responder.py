@@ -106,7 +106,7 @@ def responder(text, say, clearer):
     # Open the default web browser (Ex: Open the web browser)
     elif any(match in s_text for match in inputOutputData[3][1:]):
         say("Done.")
-        webbrowser.open_new(f'https://')
+        webbrowser.open_new_tab(f'https://')
         sleep(3)  # Wait till it finishes writing on the CLI
         clearer()  # Then clear
 
@@ -118,7 +118,7 @@ def responder(text, say, clearer):
         say(f"Sure. Opening {whichSite}.")
         for url in inputOutputData[4][1:]:
             if whichSite in url:
-                webbrowser.open_new(f'https://www.{url}')
+                webbrowser.open_new_tab(f'https://www.{url}')
                 sleep(3)
                 clearer()
                 print(f"Listening...\n---> Opening {url}...")
@@ -128,7 +128,7 @@ def responder(text, say, clearer):
     elif "search for" in s_text:
         whatToSearchFor = s_text.split("search for ")[-1]
         say(f"Sure. Searching for {whatToSearchFor}")
-        webbrowser.open_new(f"https://www.google.com/search?q={whatToSearchFor}")
+        webbrowser.open_new_tab(f"https://www.google.com/search?q={whatToSearchFor}")
         sleep(3)
         clearer()
         print(f"Listening...\n---> Searching for {whatToSearchFor}...")
@@ -141,7 +141,7 @@ def responder(text, say, clearer):
         whatToFind = s_text.split("find ")[-1]
         say(f"Alright. Finding {whatToFind}.")
         link = next(googlesearch.search(whatToFind, stop=1, pause=2))
-        webbrowser.open_new(link)
+        webbrowser.open_new_tab(link)
         sleep(3)
         clearer()
         print(f"Listening...\n---> Finding {whatToFind.title()}...")
@@ -157,7 +157,7 @@ def responder(text, say, clearer):
         response = BeautifulSoup(response, "html.parser")
 
         for video in response.find_all(attrs={"class":"yt-uix-tile-link"}):
-            webbrowser.open_new("https://www.youtube.com" + video['href'])
+            webbrowser.open_new_tab("https://www.youtube.com" + video['href'])
             sleep(3)
             clearer()
             urlTitle = video['title']
