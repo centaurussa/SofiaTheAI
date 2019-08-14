@@ -68,33 +68,32 @@ def say2(lines):
     engine = pyttsx3.init()
     engine.setProperty('volume', 1)
 
-    if os.name != "nt":  # Set the female voice for Linux systems
+    # Set the female voice for Linux systems
+    if os.name != "nt":
         engine.setProperty('voice', 'english+f4')
         engine.setProperty('rate', 140)
+    # Set the female voice for Windows systems
+
     else:
-        voices = engine.getProperty('voices')  # Set the female voice for Windows systems
-        engine.setProperty('voice', voices[0].id)
-        engine.setProperty('rate', 120)
+        key_to_read = r'SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0'
+
+        # Try using Window's regisrered voiceses
+        try:
+            reg = ConnectRegistry(None, HKEY_LOCAL_MACHINE)
+            k = OpenKey(reg, key_to_read)
+        # If failed, let the library handle it
+        except Exception:
+            voices = engine.getProperty('voices')
+            engine.setProperty('voice', voices[1].id)
+            engine.setProperty('rate', 120)
+        # If worked, then all set!
+        else:
+            voices = r"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
+            engine.setProperty('voice', voice)
+            engine.setProperty('rate', 120)
 
     engine.say(lines)
     engine.runAndWait()
-    clearer()
-    print("Listening...")
-
-
-def inputName(say):
-    '''Takes user\'s name and stores it in a .txt file'''
-
-    while 1:
-        name = input("Your name: ")
-        if len(name) < 2:
-            print("The written name is too short, try again.\n")
-        else:
-            break
-    with open("user_information.txt", "w") as f:
-        f.write(f"name='{name}'")
-    say(f"Alright. Nice to meet you {name}")
-    sleep(2)
     clearer()
     print("Listening...")
 
