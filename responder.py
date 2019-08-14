@@ -36,7 +36,15 @@ def responder(text, say, clearer):
         print("Listening...")
 
     elif "old are you" in s_text or "your age" in s_text:
-        say(f"Yousif created me before {sofiaAge()} days.")
+        say(f"I am {sofiaAge()} days old.")
+
+    # Check if greeted me
+    elif any(match in s_text for match in inputOutputData[0][1:]) and all(
+                                [i not in s_text for i in ["search", "find"]]):
+
+        # Greet randomly
+        say(f"{choice(inputOutputData[0][1:]).title()}. "
+                                            f"{choice(inputOutputData[1][1:])}")
 
     elif inputOutputData[8][1] in s_text or inputOutputData[8][2] in s_text:
         say("I am an AI assistant, I guide others to a treasure I cannot possess. Hashtag sad face.")

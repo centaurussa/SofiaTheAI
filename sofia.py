@@ -35,7 +35,7 @@ def goSofia():
                         text = r.recognize_google(audio)
 
                         # Respond or do an action
-                        responder.responder(text, sf.say1, sf.clearer)
+                        responder.responder(text, sf.say2, sf.clearer)
 
                     # Exit from the listening loop if the session ended
                     except SystemExit:

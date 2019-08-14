@@ -98,6 +98,23 @@ def say2(lines):
     print("Listening...")
 
 
+def inputName(say):
+    '''Takes user\'s name and stores it in a .txt file'''
+
+    while 1:
+        name = input("Your name: ")
+        if len(name) < 2:
+            print("The written name is too short, try again.\n")
+        else:
+            break
+    with open("user_information.txt", "w") as f:
+        f.write(f"name='{name}'")
+    say(f"Alright. Nice to meet you {name}")
+    sleep(2)
+    clearer()
+    print("Listening...")
+
+
 # Returns time differece between a set date and today's date
 def sofiaAge():
     '''Calculate and return Sofia\'s age'''
